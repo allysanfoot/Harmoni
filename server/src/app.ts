@@ -4,7 +4,15 @@ import journalRoutes from "./routes/journalRoutes"
 
 dotenv.config();
 
+const cors = require("cors");
 const app = express();
+
+// Allow requests from your frontend
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // Include credentials if needed
+}));
 
 // Middleware
 app.use(express.json());
