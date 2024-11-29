@@ -17,10 +17,10 @@ const LoginPage: React.FC = () => {
             <h1>Welcome to Harmoni</h1>
             <p>Create an account or log in to access our features and connect with others!</p>
             <div>
-                <button>
+                <button onClick={goToRegister}>
                     Register
                 </button>
-                <button>
+                <button onClick={goToLogin}>
                     Login
                 </button>
             </div>
