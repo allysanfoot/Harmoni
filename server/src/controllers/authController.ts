@@ -6,12 +6,61 @@ import pool from "../config/db";
 const JWT_SECRET = "your-secret-key"; // Use a strong secret key and store it in .env
 
 // User Registration
-export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+//     const { email, username, password } = req.body;
+
+//     try {
+//         // Check if email or username already exists
+//         const userExists = await pool.query("SELECT * FROM users WHERE email = $1 OR username = $2", [email, username]);
+//         if (userExists.rows.length > 0) {
+//             res.status(400).json({ error: "Email or username already exists" });
+//             return;
+//         }
+
+//         // Hash the password
+//         const salt = await bcrypt.genSalt(10);
+//         const hashedPassword = await bcrypt.hash(password, salt);
+
+//         // Insert new user into the database
+//         await pool.query(
+//             "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3)",
+//             [email, username, hashedPassword]
+//         );
+
+//         // Generate a JWT
+//         const token = jwt.sign({ id: username, email }, JWT_SECRET, { expiresIn: "1h" });
+
+//         res.status(201).json({ message: "User registered successfully", token });
+//     } catch (error) {
+//         console.error(error);
+//         next(error);
+//     }
+// };
+
+// export const registerUser = async (req: Request, res: Response): Promise<void> => {
+//     const { email, username, password } = req.body;
+
+//     try {
+//         const result = await pool.query(
+//             "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3) RETURNING *",
+//             [email, username, "dummy_password"]
+//         );
+//         res.status(201).json({ message: "User created successfully!", user: result.rows[0] });
+//     } catch (error) {
+//         console.error("Database error:", error);
+//         res.status(500).json({ error: "Database error" });
+//     }
+// };
+
+export const registerUser = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
     try {
         // Check if email or username already exists
-        const userExists = await pool.query("SELECT * FROM users WHERE email = $1 OR username = $2", [email, username]);
+        const userExists = await pool.query(
+            "SELECT * FROM users WHERE email = $1 OR username = $2",
+            [email, username]
+        );
         if (userExists.rows.length > 0) {
             res.status(400).json({ error: "Email or username already exists" });
             return;
@@ -22,15 +71,32 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Insert new user into the database
-        await pool.query(
-            "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3)",
+        const result = await pool.query(
+            "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3) RETURNING *",
             [email, username, hashedPassword]
         );
 
-        res.status(201).json({ message: "User registered successfully" });
+        const user = result.rows[0];
+
+        // Generate a JWT token
+        const token = jwt.sign(
+            { id: user.id, email: user.email, username: user.username },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        res.status(201).json({
+            message: "User registered successfully!",
+            user: {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+            },
+            token,
+        });
     } catch (error) {
-        console.error(error);
-        next(error);
+        console.error("Database error:", error);
+        res.status(500).json({ error: "Database error" });
     }
 };
 
@@ -55,7 +121,6 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
         // Generate a JWT
         const token = jwt.sign({ id: user.rows[0].id, email: user.rows[0].email }, JWT_SECRET, { expiresIn: "1h" });
-
         res.status(200).json({ token });
     } catch (error) {
         console.error(error);

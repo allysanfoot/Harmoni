@@ -1,6 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
+import { verifyJWT } from "./middleware/authMiddleware";
+
+// Routes
 import journalRoutes from "./routes/journalRoutes"
+import authRoutes from "./routes/authRoutes";
 
 dotenv.config();
 
@@ -18,7 +22,8 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use("/api/journals", journalRoutes);
+app.use("/journals", verifyJWT, journalRoutes);
+app.use("/auth", authRoutes);
 
 // Error Handling Middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

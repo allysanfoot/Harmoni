@@ -1,7 +1,7 @@
 import axios from "axios";
 import { JournalEntry } from "../types/JournalEntry";
 
-const API_URL = "/api/journals";
+const API_URL = "/journals";
 
 export const getJournalEntries = async (): Promise<JournalEntry[]> => {
     const response = await axios.get(API_URL);

@@ -1,12 +1,18 @@
 import React from "react";
-import JournalList from "./components/JournalList";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+
+// Import pages
+//import JournalList from "./components/JournalList";
 
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>Welcome to Harmoni</h1>
-      <JournalList />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/journal" element={<JournalList />} /> */}
+      </Routes>
+    </Router>
   );
 };
 
