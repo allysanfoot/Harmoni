@@ -1,4 +1,4 @@
-export interface Journal {
+export interface JournalEntry {
     id: number;
     userId: number;
     title: string;

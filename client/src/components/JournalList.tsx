@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getJournals } from "../services/JournalService";
-import { Journal } from "../types/Journal";
+import { getJournalEntries } from "../services/JournalService";
+import { JournalEntry } from "../types/JournalEntry";
 
 const JournalList: React.FC = () => {
-    const [journals, setJournals] = useState<Journal[]>([]);
+    const [journals, setJournals] = useState<JournalEntry[]>([]);
 
     useEffect(() => {
         const fetchJournals = async () => {
-            const data = await getJournals();
+            const data = await getJournalEntries();
             setJournals(data);
         };
 
