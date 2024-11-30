@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // Import pages
 import LandingPage from "./pages/LandingPage";
 import RegistrationPage from "./pages/RegistrationPage";
-import LoginPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 
 const App: React.FC = () => {
