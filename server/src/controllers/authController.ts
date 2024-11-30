@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../config/db";
+import { validateEmail } from "../utils/validators";
 
 const JWT_SECRET = "your-secret-key"; // Use a strong secret key and store it in .env
 
@@ -54,6 +55,11 @@ const JWT_SECRET = "your-secret-key"; // Use a strong secret key and store it in
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
+
+    if (!validateEmail(email)) {
+        res.status(400).json({ error: "Invalid email format" });
+        return;
+    }
 
     try {
         // Check if email or username already exists
