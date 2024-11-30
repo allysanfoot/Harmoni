@@ -1,0 +1,20 @@
+----------------------------------------------------
+|   NavBar: Home | Journals | AI Insights | Logout |
+----------------------------------------------------
+| Welcome Header                                |
+| "Welcome back, [User's Name]!"               |
+| "Here's a quick insight for today:"          |
+| [Brief AI Insight Text]                      |
+----------------------------------------------------
+| Insights Overview:                           |
+| [Chart: Sentiment Trends]    [Chart: Emotional Tones]|
+----------------------------------------------------
+| Recent Journal Entries                       |
+| Entry 1: [Preview...] [View/Edit/Delete]     |
+| Entry 2: [Preview...] [View/Edit/Delete]     |
+----------------------------------------------------
+| AI Suggestions:                              |
+| [Suggested Focus Areas / Prompts]           |
+----------------------------------------------------
+| Quick Actions: [Add Entry] [Run Analysis]   |
+----------------------------------------------------

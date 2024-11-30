@@ -20,14 +20,18 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         try {
             const response = await axios.post("http://localhost:8080/auth/login", formData);
             const { token } = response.data;
-
+    
             // Save token to localStorage
             localStorage.setItem("token", token);
-
+    
+            // Decode the token to get user data (optional)
+            const userData = JSON.parse(atob(token.split(".")[1])); // Decode the JWT payload
+            console.log("Logged-in user data:", userData);
+    
             setMessage("Login successful!");
             navigate("/home");
         } catch (error: any) {
@@ -36,7 +40,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div>
+        <div style={{ maxWidth: "400px", margin: "0 auto" }}>
             <h2>Login</h2>
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>

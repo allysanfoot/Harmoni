@@ -7,52 +7,6 @@ import { validateEmail } from "../utils/validators";
 const JWT_SECRET = "your-secret-key"; // Use a strong secret key and store it in .env
 
 // User Registration
-// export const registerUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const { email, username, password } = req.body;
-
-//     try {
-//         // Check if email or username already exists
-//         const userExists = await pool.query("SELECT * FROM users WHERE email = $1 OR username = $2", [email, username]);
-//         if (userExists.rows.length > 0) {
-//             res.status(400).json({ error: "Email or username already exists" });
-//             return;
-//         }
-
-//         // Hash the password
-//         const salt = await bcrypt.genSalt(10);
-//         const hashedPassword = await bcrypt.hash(password, salt);
-
-//         // Insert new user into the database
-//         await pool.query(
-//             "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3)",
-//             [email, username, hashedPassword]
-//         );
-
-//         // Generate a JWT
-//         const token = jwt.sign({ id: username, email }, JWT_SECRET, { expiresIn: "1h" });
-
-//         res.status(201).json({ message: "User registered successfully", token });
-//     } catch (error) {
-//         console.error(error);
-//         next(error);
-//     }
-// };
-
-// export const registerUser = async (req: Request, res: Response): Promise<void> => {
-//     const { email, username, password } = req.body;
-
-//     try {
-//         const result = await pool.query(
-//             "INSERT INTO users (email, username, password_hash) VALUES ($1, $2, $3) RETURNING *",
-//             [email, username, "dummy_password"]
-//         );
-//         res.status(201).json({ message: "User created successfully!", user: result.rows[0] });
-//     } catch (error) {
-//         console.error("Database error:", error);
-//         res.status(500).json({ error: "Database error" });
-//     }
-// };
-
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     const { email, username, password } = req.body;
 
@@ -108,31 +62,39 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
 // User Login
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
     try {
-        // Check if user exists
-        const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+        // Check if user exists by email or username
+        const user = await pool.query(
+            "SELECT * FROM users WHERE email = $1 OR username = $1",
+            [emailOrUsername]
+        );
         if (user.rows.length === 0) {
             res.status(404).json({ error: "User not found" });
-            return
+            return;
         }
 
         // Validate the password
         const validPassword = await bcrypt.compare(password, user.rows[0].password_hash);
         if (!validPassword) {
             res.status(401).json({ error: "Invalid password" });
-            return
+            return;
         }
 
         // Generate a JWT
-        const token = jwt.sign({ id: user.rows[0].id, email: user.rows[0].email }, JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign(
+            { id: user.rows[0].id, email: user.rows[0].email, username: user.rows[0].username },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
         res.status(200).json({ token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
 
 // OAuth Callback (Google OAuth example)
 export const googleOAuthCallback = async (req: Request, res: Response) => {
