@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext"; // Ensure you import useAuth
 
 const Login: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
 
     const [message, setMessage] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { login } = useAuth(); // Get the login function from AuthContext
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
@@ -20,18 +22,18 @@ const Login: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         try {
             const response = await axios.post("http://localhost:8080/auth/login", formData);
             const { token } = response.data;
-    
-            // Save token to localStorage
-            localStorage.setItem("token", token);
-    
-            // Decode the token to get user data (optional)
-            const userData = JSON.parse(atob(token.split(".")[1])); // Decode the JWT payload
+
+            // Use the login function from AuthContext
+            login(token);
+
+            // Optional: Decode the token for user data (not recommended for sensitive info)
+            const userData = JSON.parse(atob(token.split(".")[1]));
             console.log("Logged-in user data:", userData);
-    
+
             setMessage("Login successful!");
             navigate("/home");
         } catch (error: any) {
@@ -52,6 +54,7 @@ const Login: React.FC = () => {
                         name="emailOrUsername"
                         value={formData.emailOrUsername}
                         onChange={handleChange}
+                        placeholder="Enter your email or username"
                         required
                     />
                 </div>
@@ -63,6 +66,7 @@ const Login: React.FC = () => {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
+                        placeholder="Enter your password"
                         required
                     />
                 </div>

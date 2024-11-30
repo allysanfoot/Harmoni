@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext"; // Import the AuthContext
 import "../styles/NavBar.css";
 
 const NavBar: React.FC = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn, logout } = useAuth(); // Access isLoggedIn and logout from AuthContext
     const navigate = useNavigate();
 
-    // Check login state on component mount
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token); // Set to true if token exists
-    }, []);
-
-    // Logout function
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        setIsLoggedIn(false);
+        logout(); // Log the user out and clear token
         navigate("/login"); // Redirect to login page
     };
 
