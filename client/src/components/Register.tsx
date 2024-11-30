@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../utils/validators";
 
 const Register = () => {
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
     const [formData, setFormData] = useState({
         email: "",
         username: "",
@@ -26,7 +28,7 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/auth/register", formData);
+            const response = await axios.post(`${API_BASE_URL}/auth/register`, formData);
             setMessage(`Success: ${response.data.message}`);
             if (response.status === 201) {
                 navigate("/login"); // Use react-router-dom's useNavigate hook

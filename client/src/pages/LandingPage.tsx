@@ -1,16 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-    const navigate = useNavigate();
-
-    const goToRegister = () => {
-        navigate('/register');
-    }
-
-    const goToLogin = () => {
-        navigate('/login');
-    }
 
     return (
         <div>

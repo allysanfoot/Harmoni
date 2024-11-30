@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext"; // Ensure you import useAuth
+import { useAuth } from "../contexts/AuthContext";
 
 const Login: React.FC = () => {
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
     const [formData, setFormData] = useState({
         emailOrUsername: "",
         password: "",
@@ -24,7 +26,7 @@ const Login: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/auth/login", formData);
+            const response = await axios.post(`${API_BASE_URL}/auth/login`, formData);
             const { token } = response.data;
 
             // Use the login function from AuthContext
