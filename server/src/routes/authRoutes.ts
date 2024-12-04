@@ -1,6 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
-import { registerUser, loginUser, googleOAuthCallback } from "../controllers/authController";
+import { registerUser, loginUser } from "../controllers/authController";
 import { verifyJWT } from "../middleware/authMiddleware";
 import pool from "../config/db";
 
@@ -24,12 +24,12 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // TODO: Google OAuth routes
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-router.get(
-    "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login" }),
-    googleOAuthCallback
-);
+// router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+// router.get(
+//     "/google/callback",
+//     passport.authenticate("google", { failureRedirect: "/login" }),
+//     googleOAuthCallback
+// );
 
 // Example of a protected route
 router.get("/protected", verifyJWT, (req, res) => {
