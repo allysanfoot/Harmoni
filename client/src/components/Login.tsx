@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const Login: React.FC = () => {
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
 
     const [formData, setFormData] = useState({
         emailOrUsername: "",

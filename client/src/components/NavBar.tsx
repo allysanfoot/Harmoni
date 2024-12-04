@@ -15,9 +15,14 @@ const NavBar: React.FC = () => {
     return (
         <nav className="navbar">
             <div className="logo">
-                <Link to="/" className="nav-link">
-                    Harmoni
-                </Link>
+                {isLoggedIn ? (
+                    <Link to="/home" className="nav-link">
+                        Harmoni
+                    </Link>
+                ) : (
+                    <Link to="/" className="nav-link">
+                        Harmoni
+                    </Link>)}
             </div>
             <ul className="nav-links">
                 <li className="nav-item">

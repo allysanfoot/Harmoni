@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import pool from "../config/db";
 import { validateEmail } from "../utils/validators";
 
-const JWT_SECRET = "your-secret-key"; // Use a strong secret key and store it in .env
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Use a strong secret key and store it in .env
 
 // User Registration
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
@@ -97,23 +97,23 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 
 // OAuth Callback (Google OAuth example)
-export const googleOAuthCallback = async (req: Request, res: Response) => {
-    try {
-        const { email, name } = req.user as { email: string; name: string };
+// export const googleOAuthCallback = async (req: Request, res: Response) => {
+//     try {
+//         const { email, name } = req.user as { email: string; name: string };
 
-        // Check if the user already exists
-        const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-        if (user.rows.length === 0) {
-            // Register new user
-            await pool.query("INSERT INTO users (email, username) VALUES ($1, $2)", [email, name]);
-        }
+//         // Check if the user already exists
+//         const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+//         if (user.rows.length === 0) {
+//             // Register new user
+//             await pool.query("INSERT INTO users (email, username) VALUES ($1, $2)", [email, name]);
+//         }
 
-        // Generate a JWT
-        const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
+//         // Generate a JWT
+//         const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
 
-        res.redirect(`/auth/success?token=${token}`); // Redirect with token
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-};
+//         res.redirect(`/auth/success?token=${token}`); // Redirect with token
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// };
