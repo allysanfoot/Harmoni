@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import JournalEntries from '../components/JournalEntries'
 import JournalEntryForm from '../components/JournalEntryForm'
 
 const HomePage: React.FC = () => {
+    const [refreshEntries, setRefreshEntries] = useState(false);
+
+    // Toggle `refreshEntries` to trigger a re-fetch in JournalEntries
+    const handleRefreshEntries = () => {
+        setRefreshEntries((prev) => !prev);
+    };
+
     return (
         <div>
-            <h1>Journal App</h1>
-            <JournalEntryForm />
-            <JournalEntries />
+            <JournalEntryForm onEntryCreated={handleRefreshEntries}/>
+            <JournalEntries refreshTrigger={refreshEntries}/>
         </div>
     )
 }

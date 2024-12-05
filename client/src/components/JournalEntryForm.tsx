@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { createJournalEntry } from "../services/journalService";
 import "../styles/JournalEntryForm.css";
 
-const JournalEntryForm: React.FC = () => {
-    const [title, setTitle] = useState("");
+const JournalEntryForm: React.FC<{ onEntryCreated: () => void }> = ({ onEntryCreated }) => {    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [mood, setMood] = useState("");
     const [tags, setTags] = useState<string[]>([]);
@@ -23,6 +22,7 @@ const JournalEntryForm: React.FC = () => {
             setMood("");
             setTags([]);
             setTagInput("");
+            onEntryCreated();
         } catch (error) {
             setMessage("Failed to create journal entry.");
             console.error(error);
