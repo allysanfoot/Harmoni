@@ -13,6 +13,9 @@ import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import JournalAnalysis from "./components/JournalAnalysis";
 
+// Import styles
+import "./styles/App.css";
+
 const App: React.FC = () => {
   return (
     <>

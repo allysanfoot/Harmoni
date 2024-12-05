@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import "../styles/Login.css";
 
 const Login: React.FC = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
@@ -44,37 +45,38 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+        <div className="login-container">
             <h2>Login</h2>
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="emailOrUsername">Email or Username:</label>
+                <div className="login-field">
+                    <label htmlFor="emailOrUsername">Email or Username</label>
                     <input
                         type="text"
                         id="emailOrUsername"
                         name="emailOrUsername"
                         value={formData.emailOrUsername}
                         onChange={handleChange}
-                        placeholder="Enter your email or username"
+                        placeholder="example@gmail.com"
                         required
                     />
                 </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
+                <div className="login-field">
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         id="password"
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        placeholder="Enter your password"
+                        placeholder="password"
                         required
                     />
                 </div>
                 <button type="submit">Log In</button>
             </form>
         </div>
+
     );
 };
 
