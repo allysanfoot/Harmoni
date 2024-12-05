@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../utils/validators";
+import "../styles/Register.css";
 
 const Register = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
@@ -40,43 +41,50 @@ const Register = () => {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+        <div className="register-container">
             <h2>Register</h2>
+            {message && <p>{message}</p>}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
+                <div className="register-field">
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
+                        id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        placeholder="example@gmail.com"
                         required
                     />
                 </div>
-                <div>
-                    <label>Username:</label>
+                <div className="register-field">
+                    <label htmlFor="username">Username</label>
                     <input
                         type="text"
+                        id="username"
                         name="username"
                         value={formData.username}
                         onChange={handleChange}
+                        placeholder="HarmoniUser"
                         required
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className="register-field">
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
+                        id="password"
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
+                        placeholder="password"
                         required
                     />
                 </div>
                 <button type="submit">Register</button>
             </form>
-            {message && <p>{message}</p>}
         </div>
+
     );
 };
 

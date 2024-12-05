@@ -4,7 +4,8 @@ import { getJournalEntries, deleteJournalEntry } from "../services/journalServic
 import { JournalEntry } from "../types/JournalEntry";
 import "../styles/JournalEntries.css";
 
-const JournalEntries: React.FC<{ refreshTrigger: boolean }> = ({ refreshTrigger }) => {    const navigate = useNavigate();
+const JournalEntries: React.FC<{ refreshTrigger: boolean }> = ({ refreshTrigger }) => {
+    const navigate = useNavigate();
     const [entries, setEntries] = useState<JournalEntry[]>([]);
 
     const fetchEntries = async () => {
@@ -15,7 +16,7 @@ const JournalEntries: React.FC<{ refreshTrigger: boolean }> = ({ refreshTrigger 
             console.error("Failed to fetch journal entries", error);
         }
     };
-    
+
     // Fetch entries when the component mounts
     useEffect(() => {
         fetchEntries();
@@ -56,11 +57,19 @@ const JournalEntries: React.FC<{ refreshTrigger: boolean }> = ({ refreshTrigger 
                             <td>{entry.mood}</td>
                             <td>{entry.tags.join(", ")}</td>
                             <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
-                            <td>
-                                <button onClick={() => handleViewAnalysis(entry.id)}>View Analysis</button>
-                            </td>
-                            <td>
-                                <button onClick={() => handleDelete(entry.id)}>Delete</button>
+                            <td className="actions">
+                                <button
+                                    className="view-analysis-button"
+                                    onClick={() => handleViewAnalysis(entry.id)}
+                                >
+                                    Analyze
+                                </button>
+                                <button
+                                    className="delete-button"
+                                    onClick={() => handleDelete(entry.id)}
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

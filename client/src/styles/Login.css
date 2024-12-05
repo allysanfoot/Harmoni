@@ -1,0 +1,99 @@
+.login-container {
+    max-width: 400px;
+    margin: 5rem auto;
+    /* Center the form vertically and horizontally */
+    padding: 2rem;
+    border: 1px solid #ddd;
+    /* Subtle border for card effect */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
+    background-color: #ffffff;
+    /* White background for contrast */
+    font-family: Arial, sans-serif;
+    /* Clean font */
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-bottom: 0.5rem;
+    color: #555;
+    /* Subtle label color */
+    font-size: 0.9rem;
+}
+
+.login-container input {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    /* Light border */
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.login-container input:focus {
+    border-color: #007bff;
+    /* Highlight border on focus */
+}
+
+.login-container button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    /* Blue background for button */
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+.login-container p {
+    color: #f00;
+    /* Red for error messages */
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        margin: 2rem 1rem;
+        /* Reduce margins */
+        padding: 1.5rem;
+    }
+
+    .login-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .login-container input,
+    .login-container button {
+        font-size: 0.9rem;
+    }
+}

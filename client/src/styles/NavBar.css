@@ -1,15 +1,25 @@
 nav {
+    align-items: center;
+    background-color: black;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #4caf50;
+    padding: 1rem 2rem;
     color: white;
 }
 
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
 nav .logo {
+    color: white;
     font-size: 24px;
     font-weight: bold;
+}
+
+nav .nav-link:hover {
+    cursor: pointer;
 }
 
 nav .nav-links {
@@ -25,12 +35,10 @@ nav .nav-links li {
 
 nav .nav-links a {
     text-decoration: none;
-    color: white;
-    font-size: 18px;
 }
 
-nav .nav-links a:hover {
-    text-decoration: underline;
+nav .nav-links a:visited {
+    color: white;
 }
 
 .button-link {
@@ -41,8 +49,4 @@ nav .nav-links a:hover {
     text-decoration: none;
     padding: 0;
     font: inherit;
-}
-
-.button-link:hover {
-    text-decoration: underline;
 }
