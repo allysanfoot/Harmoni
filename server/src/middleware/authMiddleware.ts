@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+
 import { Request, Response, NextFunction } from "express";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
@@ -16,7 +17,6 @@ export const verifyJWT = (req: Request, res: Response, next: NextFunction): void
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log("Decoded JWT:", decoded);
         req.user = decoded as {
             id: number;
             email: string;

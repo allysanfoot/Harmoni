@@ -28,7 +28,7 @@ export const getJournalEntries = async () => {
 // Get a specific journal entry
 export const getJournalEntryById = async (id: number) => {
     const response = await axios.get(`${API_BASE_URL}/journals/${id}`, config);
-    return response.data;
+    return response.data; // The journal entry
 };
 
 // Update a journal entry
@@ -45,3 +45,10 @@ export const deleteJournalEntry = async (id: number) => {
     const response = await axios.delete(`${API_BASE_URL}/journals/${id}`, config);
     return response.data;
 };
+
+// Get analysis for a specific journal entry
+export const getJournalAnalysis = async (id: number) => {
+    const response = await axios.get(`${API_BASE_URL}/journals/${id}/analysis`, config);
+    return response.data;
+};
+
